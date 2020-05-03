@@ -1,0 +1,1049 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a CRUD REST API ISHotel",
+    "version": "1.0.0",
+    "title": "ISHotel",
+    "termsOfService": "https://github.com/TergBug"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "service",
+      "description": "Service in hotel"
+    },
+    {
+      "name": "facility",
+      "description": "Facilities in hotel"
+    },
+    {
+      "name": "employee",
+      "description": "Employee in hotel"
+    },
+    {
+      "name": "room",
+      "description": "Rooms in hotel"
+    },
+    {
+      "name": "customer",
+      "description": "Customers"
+    },
+    {
+      "name": "authorityChanging",
+      "description": "Change authority for user"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/v1/services/{id}": {
+      "get": {
+        "tags": [
+          "service"
+        ],
+        "summary": "Get service by id",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of service",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "service"
+        ],
+        "summary": "Delete service",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of service",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/services": {
+      "get": {
+        "tags": [
+          "service"
+        ],
+        "summary": "Get all services",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Service"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "service"
+        ],
+        "summary": "Add a new service",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "service",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Cannot create entry, maybe this entry has already created"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "service"
+        ],
+        "summary": "Update an existing service",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "service",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No such entry"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/facilities/{id}": {
+      "get": {
+        "tags": [
+          "facility"
+        ],
+        "summary": "Get facility by id",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of facility",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Facility"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "facility"
+        ],
+        "summary": "Delete facility",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of facility",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/facilities": {
+      "get": {
+        "tags": [
+          "facility"
+        ],
+        "summary": "Get all facilities",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Facility"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "facility"
+        ],
+        "summary": "Add a new facility",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "facility",
+            "schema": {
+              "$ref": "#/definitions/Facility"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Cannot create entry, maybe this entry has already created"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "facility"
+        ],
+        "summary": "Update an existing facility",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "facility",
+            "schema": {
+              "$ref": "#/definitions/Facility"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No such entry"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/employees/{id}": {
+      "get": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Get employee by id",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of employee",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Delete employee",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of employee",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/employees": {
+      "get": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Get all employees",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Employee"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Add a new employee",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "employee",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Cannot create entry, maybe this entry has already created"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Update an existing employee",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "employee",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No such entry"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/rooms/{id}": {
+      "get": {
+        "tags": [
+          "room"
+        ],
+        "summary": "Get room by id",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of room",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Room"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "room"
+        ],
+        "summary": "Delete room",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of room",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/rooms": {
+      "get": {
+        "tags": [
+          "room"
+        ],
+        "summary": "Get all rooms",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Room"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "room"
+        ],
+        "summary": "Add a new room",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "room",
+            "schema": {
+              "$ref": "#/definitions/Room"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Cannot create entry, maybe this entry has already created"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "room"
+        ],
+        "summary": "Update an existing room",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "room",
+            "schema": {
+              "$ref": "#/definitions/Room"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No such entry"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/customers/{id}": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Get customer by id",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of customer",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Delete customer",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of customer",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Invalid parameter id"
+          },
+          "404": {
+            "description": "No such id"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/customers": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Get all customers",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Add a new customer",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "customer",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Cannot create entry, maybe this entry has already created"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Update an existing customer",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "customer",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No such entry"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/authchange/{username}": {
+      "get": {
+        "tags": [
+          "authorityChanging"
+        ],
+        "summary": "Get all authorities of user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "Username does not exist"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "authorityChanging"
+        ],
+        "summary": "Delete user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Username does not exist"
+          }
+        }
+      }
+    },
+    "/authchange/{username}/{authorityName}": {
+      "post": {
+        "tags": [
+          "authorityChanging"
+        ],
+        "summary": "Change authority of user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorityName",
+            "in": "path",
+            "description": "Name of authority",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Authority or username does not exist"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "authorityChanging"
+        ],
+        "summary": "Delete authority from user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorityName",
+            "in": "path",
+            "description": "Name of authority",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Authority or username does not exist"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    },
+    "Facility": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    },
+    "Employee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "service": {
+          "$ref": "#/definitions/Service"
+        },
+        "facility": {
+          "$ref": "#/definitions/Facility"
+        }
+      }
+    },
+    "Room": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "roomType": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "floor": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "number"
+        },
+        "attendant": {
+          "type": "string"
+        }
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "passport": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "fees": {
+          "type": "number"
+        },
+        "paymentType": {
+          "type": "string"
+        },
+        "room": {
+          "$ref": "#/definitions/Room"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "facilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
