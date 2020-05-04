@@ -25,6 +25,8 @@ import java.util.Properties;
 public class DatabaseConfig {
     @Autowired
     private Environment environment;
+    @Autowired
+    private SetupConfig setupConfig;
 
     @Bean
     public SpringLiquibase liquibase() {
@@ -34,23 +36,13 @@ public class DatabaseConfig {
         return liquibase;
     }
 
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan("org.mycode");
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        return sessionFactory;
-
-//    }
-
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("jdbc.driver"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.user"));
-        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        dataSource.setDriverClassName(setupConfig.getProperty("jdbc.driver"));
+        dataSource.setUrl(setupConfig.getProperty("jdbc.url"));
+        dataSource.setUsername(setupConfig.getProperty("jdbc.user"));
+        dataSource.setPassword(setupConfig.getProperty("jdbc.password"));
         dataSource.setConnectionProperties("serverTimezone=UTC");
         return dataSource;
     }
