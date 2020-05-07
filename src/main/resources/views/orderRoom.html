@@ -13,6 +13,10 @@
                 document.location.href = window.location.protocol + "//" + window.location.host + "/order/room/" + selRT;
             }
         }
+
+        function submitting() {
+            $("#submit").css({"display": "table-row"});
+        }
     </script>
 </head>
 <body>
@@ -43,20 +47,19 @@
         </td>
     </tr>
 </table>
-<form action="#" content="application/json" method='POST' th:action="@{/order/room}" th:if="${sPersons > 0}"
-      th:object="${customer}"
-      th:with="rms = ${rooms}">
+<form action="#" method='POST' th:action="@{/order/room}" th:if="${sPersons > 0}" th:object="${customer}">
     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
     <table>
-        <tr th:each="rt : ${rms}">
+        <tr th:each="rt : ${rooms}">
             <td>
-                <input th:field="*{roomId}" th:id="${rt.getId()}" th:value="${rt.getId()}" type="radio">
+                <input th:field="*{roomId}" th:id="${rt.getId()}" th:onchange="submitting()"
+                       th:value="${rt.getId()}" type="radio">
             </td>
             <td>
                 <label th:for="${rt.getId()}" th:utext="${'Floor: '+rt.getFloor()+'<br>Price: '+rt.getPrice()}"></label>
             </td>
         </tr>
-        <tr>
+        <tr id="submit" style="display:none;">
             <td colspan="2"><input name="submit" type="submit" value="Submit"/></td>
         </tr>
     </table>
