@@ -1,11 +1,13 @@
 package org.mycode.controller;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 import org.mycode.exceptions.CannotSignUpException;
 import org.mycode.exceptions.NoSuchEntryException;
 import org.mycode.exceptions.NotUniqueEntryException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,10 +29,12 @@ public class ExceptionController {
         return new ModelAndView("error400");
     }
 
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(SQLException.class)
-    public ModelAndView handleRepoStorageException() {
-        return new ModelAndView("error500");
+    @ExceptionHandler({SQLException.class, JpaSystemException.class, GenericJDBCException.class})
+    public ModelAndView handleRepoStorageException(Exception e) {
+        if (e.getCause().getCause().getMessage().equals("This room is not free")) {
+            return new ModelAndView("error400", HttpStatus.BAD_REQUEST);
+        }
+        return new ModelAndView("error500", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ResponseStatus(code = HttpStatus.CONFLICT)

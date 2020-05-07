@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CustomerDto {
+    public static final int NOT_VERIFIED = -1;
+    public static final int ORDERING_ROOM = 0;
+    public static final int ENTERING_INFO = 1;
+    public static final int VERIFIED = 2;
+
     private long id;
     private String firstName;
     private String lastName;
@@ -18,8 +23,35 @@ public class CustomerDto {
     private RoomDto room;
     private List<String> services;
     private Map<String, Integer> facilities;
+    private int stateOfCustomer;
 
     public CustomerDto() {
+        verify();
+    }
+
+    public CustomerDto(long id) {
+        this.id = id;
+        verify();
+    }
+
+    public CustomerDto(long id, RoomDto room) {
+        this.id = id;
+        this.room = room;
+        verify();
+    }
+
+    public CustomerDto(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
+                       BigDecimal fees, String paymentType, List<String> services, Map<String, Integer> facilities) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passport = passport;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.fees = fees;
+        this.paymentType = paymentType;
+        this.services = services;
+        this.facilities = facilities;
     }
 
     public CustomerDto(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
@@ -36,6 +68,11 @@ public class CustomerDto {
         this.room = room;
         this.services = services;
         this.facilities = facilities;
+        verify();
+    }
+
+    public int getStateOfCustomer() {
+        return stateOfCustomer;
     }
 
     public long getId() {
@@ -52,6 +89,7 @@ public class CustomerDto {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        verify();
     }
 
     public String getLastName() {
@@ -60,6 +98,7 @@ public class CustomerDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        verify();
     }
 
     public String getPassport() {
@@ -68,6 +107,7 @@ public class CustomerDto {
 
     public void setPassport(String passport) {
         this.passport = passport;
+        verify();
     }
 
     public Date getStartDate() {
@@ -76,6 +116,7 @@ public class CustomerDto {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+        verify();
     }
 
     public Date getEndDate() {
@@ -84,6 +125,7 @@ public class CustomerDto {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+        verify();
     }
 
     public BigDecimal getFees() {
@@ -100,6 +142,7 @@ public class CustomerDto {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+        verify();
     }
 
     public RoomDto getRoom() {
@@ -108,6 +151,7 @@ public class CustomerDto {
 
     public void setRoom(RoomDto room) {
         this.room = room;
+        verify();
     }
 
     public List<String> getServices() {
@@ -124,6 +168,20 @@ public class CustomerDto {
 
     public void setFacilities(Map<String, Integer> facilities) {
         this.facilities = facilities;
+    }
+
+    private void verify() {
+        boolean isInfoNull = firstName == null || lastName == null || passport == null || startDate == null ||
+                paymentType == null;
+        if (isInfoNull && room != null) {
+            stateOfCustomer = ENTERING_INFO;
+        } else if (!isInfoNull && room == null) {
+            stateOfCustomer = ORDERING_ROOM;
+        } else if (!isInfoNull) {
+            stateOfCustomer = VERIFIED;
+        } else {
+            stateOfCustomer = NOT_VERIFIED;
+        }
     }
 
     @Override

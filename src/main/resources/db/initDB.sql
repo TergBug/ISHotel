@@ -52,7 +52,7 @@ create table if not exists rooms
     id           int auto_increment,
     type_id      int,
     attendant_id int,
-    state        boolean not null,
+    state        tinyint not null default 0,
     floor        int     not null,
     price        decimal(10, 2),
     foreign key (type_id) references room_types (id),
@@ -94,6 +94,7 @@ create table if not exists customers_facilities
 (
     customer_id int,
     facility_id int,
+    quantity    int,
     foreign key (customer_id) references customers (id),
     foreign key (facility_id) references facilities (id),
     primary key (customer_id, facility_id)

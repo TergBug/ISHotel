@@ -1,10 +1,13 @@
 package org.mycode.model;
 
+import org.mycode.dto.CustomerDto;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -36,16 +39,11 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    @OrderColumn(name = "service_order")
+    @OrderColumn
     private List<Service> services;
-    @ManyToMany
-    @JoinTable(
-            name = "customers_facilities",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "facility_id")
-    )
-    @OrderColumn(name = "facility_order")
-    private List<Facility> facilities;
+    @OneToMany(mappedBy = "customer")
+    @OrderColumn
+    private Set<CustomerFacility> facilities;
 
     public Customer() {
     }
@@ -55,7 +53,7 @@ public class Customer {
     }
 
     public Customer(String firstName, String lastName, String passport, Date startDate, Date endDate, BigDecimal fees,
-                    PaymentType paymentType, Room room, List<Service> services, List<Facility> facilities) {
+                    PaymentType paymentType, Room room, List<Service> services, Set<CustomerFacility> facilities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.passport = passport;
@@ -70,7 +68,7 @@ public class Customer {
 
     public Customer(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
                     BigDecimal fees, PaymentType paymentType, Room room, List<Service> services,
-                    List<Facility> facilities) {
+                    Set<CustomerFacility> facilities) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -164,12 +162,26 @@ public class Customer {
         this.services = services;
     }
 
-    public List<Facility> getFacilities() {
+    public Set<CustomerFacility> getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(List<Facility> facilities) {
+    public void setFacilities(Set<CustomerFacility> facilities) {
         this.facilities = facilities;
+    }
+
+    public int verify() {
+        boolean isInfoNull = firstName == null || lastName == null || passport == null || startDate == null ||
+                paymentType == null;
+        if (isInfoNull && room != null) {
+            return CustomerDto.ENTERING_INFO;
+        } else if (!isInfoNull && room == null) {
+            return CustomerDto.ORDERING_ROOM;
+        } else if (!isInfoNull) {
+            return CustomerDto.VERIFIED;
+        } else {
+            return CustomerDto.NOT_VERIFIED;
+        }
     }
 
     @Override

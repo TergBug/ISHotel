@@ -1,11 +1,12 @@
 package org.mycode.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class RoomDto {
+public class RoomDto implements Serializable {
     private long id;
-    private String roomType;
+    private RoomTypeDto roomType;
     private String state;
     private int floor;
     private BigDecimal price;
@@ -14,7 +15,7 @@ public class RoomDto {
     public RoomDto() {
     }
 
-    public RoomDto(long id, String roomType, String state, int floor, BigDecimal price, String attendant) {
+    public RoomDto(long id, RoomTypeDto roomType, String state, int floor, BigDecimal price, String attendant) {
         this.id = id;
         this.roomType = roomType;
         this.state = state;
@@ -31,11 +32,11 @@ public class RoomDto {
         this.id = id;
     }
 
-    public String getRoomType() {
+    public RoomTypeDto getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(String roomType) {
+    public void setRoomType(RoomTypeDto roomType) {
         this.roomType = roomType;
     }
 

@@ -33,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
-                .ignoringAntMatchers("/api/v1/**", "/authchange/**")
+                .ignoringAntMatchers("/api/v1/**", "/authchange/**", "/order/**")
                 .and()
                 .authorizeRequests()
-                .mvcMatchers("/health").permitAll()
+                .mvcMatchers("/health", "/order/**").permitAll()
                 .mvcMatchers("/login", "/signup", "/signup_proc", "/failedauth", "/failedsignup").anonymous()
                 .mvcMatchers("/**", "/logout").authenticated()
                 .and()

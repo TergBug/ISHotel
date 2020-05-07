@@ -25,9 +25,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void create(CustomerDto model) {
-        currentRepo.save(customerAssembler.assemble(model));
+    public long create(CustomerDto model) {
+        long id = currentRepo.save(customerAssembler.assemble(model)).getId();
         log.debug("Service->Create");
+        return id;
     }
 
     @Override

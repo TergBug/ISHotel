@@ -5,7 +5,7 @@ import org.mycode.dto.CustomerDto;
 import java.util.List;
 
 public interface CustomerService {
-    void create(CustomerDto model);
+    long create(CustomerDto model);
 
     CustomerDto getById(long readID);
 

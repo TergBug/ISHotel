@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order room page</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function requestBack(isSelP) {
+            const selRT = $("#selRoomType option:selected").val();
+            const selP = parseInt($("#selPersons option:selected").val());
+            if (isSelP && !isNaN(selP)) {
+                document.location.href = window.location.protocol + "//" + window.location.host + "/order/room/" +
+                    selRT + "/" + selP;
+            } else {
+                document.location.href = window.location.protocol + "//" + window.location.host + "/order/room/" + selRT;
+            }
+        }
+    </script>
+</head>
+<body>
+<!--/*@thymesVar id="customer" type="org.mycode.dto.SimpleCustomerDto"*/-->
+<!--/*@thymesVar id="roomTypes" type="java.util.Set<org.mycode.dto.RoomTypeDto>"*/-->
+<!--/*@thymesVar id="sRoomType" type="java.lang.String"*/-->
+<!--/*@thymesVar id="sPersons" type="java.lang.Integer"*/-->
+<!--/*@thymesVar id="rooms" type="java.util.List<org.mycode.dto.RoomDto>"*/-->
+
+<h1>Order room</h1>
+<table>
+    <tr th:with="rts = ${roomTypes}">
+        <td>Type:</td>
+        <td>
+            <select id="selRoomType" th:onchange="requestBack(false)"
+                    th:with="mas = ${T(org.mycode.util.StreamProc).distinct(rts)}">
+                <option disabled selected>Select room type</option>
+                <option th:each="rt : ${mas}" th:selected="${rt==sRoomType}" th:text="${rt}" th:value="${rt}"></option>
+            </select>
+        </td>
+        <td th:if="${not sRoomType.equals('')}">Persons:</td>
+        <td th:if="${not sRoomType.equals('')}">
+            <select id="selPersons" th:onchange="requestBack(true)"
+                    th:with="mas = ${T(org.mycode.util.StreamProc).filterByName(rts, sRoomType)}">
+                <option disabled selected>Select number of persons</option>
+                <option th:each="rt : ${mas}" th:selected="${rt==sPersons}" th:text="${rt}" th:value="${rt}"></option>
+            </select>
+        </td>
+    </tr>
+</table>
+<form action="#" content="application/json" method='POST' th:action="@{/order/room}" th:if="${sPersons > 0}"
+      th:object="${customer}"
+      th:with="rms = ${rooms}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <table>
+        <tr th:each="rt : ${rms}">
+            <td>
+                <input th:field="*{roomId}" th:id="${rt.getId()}" th:value="${rt.getId()}" type="radio">
+            </td>
+            <td>
+                <label th:for="${rt.getId()}" th:utext="${'Floor: '+rt.getFloor()+'<br>Price: '+rt.getPrice()}"></label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input name="submit" type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

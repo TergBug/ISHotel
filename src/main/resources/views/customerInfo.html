@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer info page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<!--/*@thymesVar id="customer" type="org.mycode.dto.SimpleCustomerDto"*/-->
+<!--/*@thymesVar id="paymentTypes" type="java.util.List<java.lang.String>"*/-->
+<!--/*@thymesVar id="customerId" type="java.lang.Long"*/-->
+<!--/*@thymesVar id="roomId" type="java.lang.Long"*/-->
+
+<h1>Enter your info</h1>
+<form action="#" method='POST' th:action="@{/order/room}" th:object="${customer}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <input name="id" th:value="${customerId}" type="hidden"/>
+    <input name="roomId" th:value="${roomId}" type="hidden"/>
+    <table>
+        <tr>
+            <td>First name:</td>
+            <td><input th:field="*{firstName}" type='text' value=''></td>
+        </tr>
+        <tr>
+            <td>Last name:</td>
+            <td><input th:field="*{lastName}" type='text' value=''></td>
+        </tr>
+        <tr>
+            <td>Passport:</td>
+            <td><input th:field="*{passport}" type='password' value=''></td>
+        </tr>
+        <tr>
+            <td>Start date:</td>
+            <td><input th:field="*{startDate}" type='date' value=''></td>
+        </tr>
+        <tr>
+            <td>End date:</td>
+            <td><input th:field="*{endDate}" type='date' value=''></td>
+        </tr>
+        <tr>
+            <td>Payment type:</td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{paymentType}" th:with="mas = ${paymentTypes}">
+                    <option th:each="pt : ${mas}" th:text="${pt}" th:value="${pt}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
