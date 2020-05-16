@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee`s ein page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Enter your EIN</h1>
+<!--/*@thymesVar id="ein" type="java.lang.String"*/-->
+<form action="#" method='POST' th:action="@{/views/signup}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <table>
+        <tr>
+            <td>EIN:</td>
+            <td><input name="ein" type='password' value=""/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

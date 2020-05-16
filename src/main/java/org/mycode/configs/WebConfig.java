@@ -49,8 +49,8 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login");
-        registry.addViewController("/failedauth");
-        registry.addViewController("/failedsignup");
+        registry.addViewController("/errors/failedauth");
+        registry.addViewController("/errors/failedsignup");
     }
 
     @Override

@@ -6,16 +6,18 @@ public class EmployeeDto {
     private long id;
     private String firstName;
     private String lastName;
+    private String ein;
     private ServiceDto service;
     private FacilityDto facility;
 
     public EmployeeDto() {
     }
 
-    public EmployeeDto(long id, String firstName, String lastName, ServiceDto service, FacilityDto facility) {
+    public EmployeeDto(long id, String firstName, String lastName, String ein, ServiceDto service, FacilityDto facility) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ein = ein;
         this.service = service;
         this.facility = facility;
     }
@@ -44,6 +46,14 @@ public class EmployeeDto {
         this.lastName = lastName;
     }
 
+    public String getEin() {
+        return ein;
+    }
+
+    public void setEin(String ein) {
+        this.ein = ein;
+    }
+
     public ServiceDto getService() {
         return service;
     }
@@ -66,6 +76,7 @@ public class EmployeeDto {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", ein='" + ein + '\'' +
                 ", service=" + service +
                 ", facility=" + facility +
                 '}';
@@ -79,12 +90,11 @@ public class EmployeeDto {
         return id == that.id &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(service, that.service) &&
-                Objects.equals(facility, that.facility);
+                Objects.equals(ein, that.ein);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, service, facility);
+        return Objects.hash(id, firstName, lastName, ein);
     }
 }

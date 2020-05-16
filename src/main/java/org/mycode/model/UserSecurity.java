@@ -19,15 +19,18 @@ public class UserSecurity {
             inverseJoinColumns = @JoinColumn(name = "authority")
     )
     private Set<AuthoritySecurity> authorities;
+    @Column(name = "identity_info")
+    private String identityInfo;
 
     public UserSecurity() {
     }
 
-    public UserSecurity(String username, String password, int enabled, Set<AuthoritySecurity> authorities) {
+    public UserSecurity(String username, String password, int enabled, Set<AuthoritySecurity> authorities, String identityInfo) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.authorities = authorities;
+        this.identityInfo = identityInfo;
     }
 
     public String getUsername() {
@@ -62,12 +65,22 @@ public class UserSecurity {
         this.authorities = authorities;
     }
 
+    public String getIdentityInfo() {
+        return identityInfo;
+    }
+
+    public void setIdentityInfo(String identityInfo) {
+        this.identityInfo = identityInfo;
+    }
+
     @Override
     public String toString() {
         return "UserSecurity{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
+                ", authorities=" + authorities +
+                ", identityInfo='" + identityInfo + '\'' +
                 '}';
     }
 

@@ -26,7 +26,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public long create(CustomerDto model) {
-        long id = currentRepo.save(customerAssembler.assemble(model)).getId();
+        long id;
+        if ((model.getServices() != null && model.getServices().size() > 0) ||
+                (model.getFacilities() != null && model.getFacilities().size() > 0)) {
+            CustomerDto temp = new CustomerDto(model);
+            temp.setServices(null);
+            temp.setFacilities(null);
+            currentRepo.save(customerAssembler.assemble(temp));
+            id = currentRepo.save(customerAssembler.assemble(model)).getId();
+        } else {
+            id = currentRepo.save(customerAssembler.assemble(model)).getId();
+        }
         log.debug("Service->Create");
         return id;
     }
@@ -59,5 +69,12 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(el -> customerAssembler.assemble(el)).collect(Collectors.toList());
         log.debug("Service->Get all");
         return customers;
+    }
+
+    @Override
+    public CustomerDto getByPassport(String passport) {
+        CustomerDto customer = customerAssembler.assemble(currentRepo.findCustomerByPassport(passport));
+        log.debug("Service->Get by passport");
+        return customer;
     }
 }

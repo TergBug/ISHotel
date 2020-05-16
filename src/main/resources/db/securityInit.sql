@@ -4,9 +4,10 @@ drop table if exists security_users;
 commit;
 create table if not exists security_users
 (
-    username varchar(255) not null,
-    password varchar(255) not null,
-    enabled  tinyint      not null default 1,
+    username      varchar(255) not null,
+    password      varchar(255) not null,
+    enabled       tinyint      not null default 1,
+    identity_info varchar(255),
     primary key (username)
 );
 create table if not exists security_authorities

@@ -18,8 +18,10 @@ public class FacilityAssemblerImpl implements FacilityAssembler {
 
     @Override
     public Facility assemble(FacilityDto dto) {
-        if (dto.getName() == null || dto.getPrice() == null) {
+        if (dto.getId() > 0 && dto.getName() == null) {
             return facilityRepository.findById(dto.getId()).orElse(null);
+        } else if (dto.getId() <= 0 && dto.getName() != null) {
+            return facilityRepository.findFacilityByName(dto.getName());
         }
         return new Facility(dto.getId(), dto.getName(), dto.getQuantity(), dto.getPrice());
     }

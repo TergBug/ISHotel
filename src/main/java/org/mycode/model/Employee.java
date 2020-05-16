@@ -13,6 +13,7 @@ public class Employee {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    private String ein;
     @ManyToOne
     @JoinColumn(name = "service_id")
     private Service service;
@@ -27,17 +28,19 @@ public class Employee {
         this.id = id;
     }
 
-    public Employee(String firstName, String lastName, Service service, Facility facility) {
+    public Employee(String firstName, String lastName, String ein, Service service, Facility facility) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ein = ein;
         this.service = service;
         this.facility = facility;
     }
 
-    public Employee(long id, String firstName, String lastName, Service service, Facility facility) {
+    public Employee(long id, String firstName, String lastName, String ein, Service service, Facility facility) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ein = ein;
         this.service = service;
         this.facility = facility;
     }
@@ -66,6 +69,14 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    public String getEin() {
+        return ein;
+    }
+
+    public void setEin(String ein) {
+        this.ein = ein;
+    }
+
     public Service getService() {
         return service;
     }
@@ -88,6 +99,7 @@ public class Employee {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", ein='" + ein + '\'' +
                 ", service=" + service +
                 ", facility=" + facility +
                 '}';
@@ -101,12 +113,13 @@ public class Employee {
         return id == employee.id &&
                 Objects.equals(firstName, employee.firstName) &&
                 Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(ein, employee.ein) &&
                 Objects.equals(service, employee.service) &&
                 Objects.equals(facility, employee.facility);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, service, facility);
+        return Objects.hash(id, firstName, lastName, ein, service, facility);
     }
 }

@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Choose sing up page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Choose sing up as</h1>
+<!--/*@thymesVar id="type" type="java.lang.String"*/-->
+<form action="#" method='POST' th:action="@{/chsignup}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <table>
+        <tr>
+            <td><input name="type" th:value="${'customer'}" type="submit" value="As customer"/></td>
+        </tr>
+        <tr>
+            <td><input name="type" th:value="${'employee'}" type="submit" value="As employee"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

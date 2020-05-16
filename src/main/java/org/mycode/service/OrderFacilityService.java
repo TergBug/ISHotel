@@ -1,7 +1,9 @@
 package org.mycode.service;
 
-public interface OrderFacilityService {
-    void order(long customerId, long facilityId);
+import org.mycode.dto.FacilityDto;
 
-    void denyOrder(long customerId, long facilityId);
+public interface OrderFacilityService {
+    void order(String customerPassport, FacilityDto facility);
+
+    void denyOrder(String customerPassport, FacilityDto facility);
 }

@@ -10,4 +10,6 @@ public interface AuthorityService {
     void deleteUser(String username);
 
     List<String> getAllAuthoritiesOfUser(String username);
+
+    String getIdentityInfoOfUser(String username);
 }

@@ -21,13 +21,13 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<CustomerDto> getById(@PathVariable long id) {
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<List<CustomerDto>> getAll() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }

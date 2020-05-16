@@ -1,66 +1,67 @@
 package org.mycode.controller;
 
+import org.mycode.dto.TempInfo;
 import org.mycode.dto.UserSecurityDto;
-import org.mycode.service.AuthorityService;
 import org.mycode.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SignUpController {
     private SignUpService signUpService;
-    private AuthorityService authorityService;
 
     @Autowired
-    public SignUpController(SignUpService signUpService, AuthorityService authorityService) {
+    public SignUpController(SignUpService signUpService) {
         this.signUpService = signUpService;
-        this.authorityService = authorityService;
     }
 
-    @GetMapping("signup")
-    public String signUp(Model model) {
-        model.addAttribute("user", new UserSecurityDto());
-        return "signup";
+    @GetMapping("chsignup")
+    public String chooseSignUp(Model model) {
+        model.addAttribute("type", "");
+        return "signup/chooseSignUp";
+    }
+
+    @PostMapping("chsignup")
+    public String makeChoice(Model model, @ModelAttribute("type") String type) {
+        if (type.equals("customer")) {
+            model.addAttribute("passport", new TempInfo());
+            return "signup/customerPassport";
+        } else if (type.equals("employee")) {
+            model.addAttribute("ein", new TempInfo());
+            return "signup/employeeEIN";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("signup")
+    public String signUp(Model model, @ModelAttribute("ein") TempInfo ein) {
+        if (signUpService.verifyEmployeeByEIN(ein.getInfo())) {
+            model.addAttribute("user", new UserSecurityDto("EMP"));
+            model.addAttribute("ein", ein);
+            return "signup/signup";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("csignup")
+    public String signUpForCustomer(Model model, @ModelAttribute("passport") TempInfo passport) {
+        if (signUpService.verifyCustomerByPassport(passport.getInfo())) {
+            model.addAttribute("user", new UserSecurityDto("CUSTOMER"));
+            model.addAttribute("passport", passport);
+            return "signup/signup";
+        } else {
+            return "redirect:/order/room";
+        }
     }
 
     @PostMapping("signup_proc")
-    @ResponseStatus(code = HttpStatus.OK)
     public String signUpSubmission(@ModelAttribute("user") UserSecurityDto userSecurityDto) {
         signUpService.signUp(userSecurityDto);
-        return "login";
-    }
-
-    @GetMapping("authchange/{username}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<String>> getAuthoritiesOfUser(@PathVariable String username) {
-        return new ResponseEntity<>(authorityService.getAllAuthoritiesOfUser(username), HttpStatus.OK);
-    }
-
-    @PostMapping("authchange/{username}/{authorityName}")
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public void changeAuthority(@PathVariable String username, @PathVariable String authorityName) {
-        authorityService.setAuthority(username, authorityName);
-    }
-
-    @DeleteMapping("authchange/{username}/{authorityName}")
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteAuthority(@PathVariable String username, @PathVariable String authorityName) {
-        authorityService.deleteAuthority(username, authorityName);
-    }
-
-    @DeleteMapping("authchange/{username}")
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable String username) {
-        authorityService.deleteUser(username);
+        return "redirect:/";
     }
 }

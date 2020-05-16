@@ -47,7 +47,8 @@
         </tr>
         <tr>
             <td>Passport:</td>
-            <td><input id="password" onchange="submitting()" th:field="*{passport}" type='password' value=''></td>
+            <td><input id="password" onchange="submitting()" th:field="${customer.passport}"
+                       type='password' value=''></td>
         </tr>
         <tr>
             <td>Start date:</td>

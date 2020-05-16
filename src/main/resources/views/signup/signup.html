@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign up page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Sign up</h1>
+<!--/*@thymesVar id="user" type="org.mycode.dto.UserSecurityDto"*/-->
+<!--/*@thymesVar id="passport" type="org.mycode.dto.TempInfo"*/-->
+<!--/*@thymesVar id="ein" type="org.mycode.dto.TempInfo"*/-->
+<form action="#" method='POST' th:action="@{/signup_proc}" th:object="${user}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <input th:field="*{authority}" th:if="${user.authority!=null}" th:value="*{authority}" type="hidden"/>
+    <input name="identityInfo" th:if="${passport!=null && ein==null}" th:value="${passport.getInfo()}" type="hidden"/>
+    <input name="identityInfo" th:if="${passport==null && ein!=null}" th:value="${ein.getInfo()}" type="hidden"/>
+    <table>
+        <tr>
+            <td>User:</td>
+            <td><input name='username' th:field="*{username}" type='text' value=''></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input name='password' th:field="*{password}" type='password'/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

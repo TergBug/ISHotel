@@ -1,13 +1,21 @@
-package org.mycode.model.notmodelclasses;
+package org.mycode.model.embededclasses;
 
 import org.mycode.model.Customer;
 import org.mycode.model.Facility;
 
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class CustomerFacilityId implements Serializable {
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
     private Facility facility;
 
     public CustomerFacilityId() {

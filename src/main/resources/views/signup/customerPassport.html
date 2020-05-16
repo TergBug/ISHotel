@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer`s passport page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Enter your passport info</h1>
+<!--/*@thymesVar id="passport" type="org.mycode.dto.TempInfo"*/-->
+<form action="#" method='POST' th:action="@{/csignup}" th:object="${passport}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <table>
+        <tr>
+            <td>Passport:</td>
+            <td><input th:field="*{info}" type='password' value=""/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

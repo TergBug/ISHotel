@@ -1,47 +1,38 @@
 package org.mycode.model;
 
-import org.mycode.model.notmodelclasses.CustomerFacilityId;
+import org.mycode.model.embededclasses.CustomerFacilityId;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "customers_facilities")
-@IdClass(CustomerFacilityId.class)
 public class CustomerFacility {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "facility_id")
-    private Facility facility;
+    @EmbeddedId
+    private CustomerFacilityId id;
     private int quantity;
 
     public CustomerFacility() {
     }
 
-    public CustomerFacility(Customer customer, Facility facility, int quantity) {
-        this.customer = customer;
-        this.facility = facility;
+    public CustomerFacility(CustomerFacilityId id, int quantity) {
+        this.id = id;
         this.quantity = quantity;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public CustomerFacility(Customer customer, Facility facility, int quantity) {
+        this.id = new CustomerFacilityId(customer, facility);
+        this.quantity = quantity;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public CustomerFacilityId getId() {
+        return id;
     }
 
-    public Facility getFacility() {
-        return facility;
-    }
-
-    public void setFacility(Facility facility) {
-        this.facility = facility;
+    public void setId(CustomerFacilityId id) {
+        this.id = id;
     }
 
     public int getQuantity() {
@@ -55,8 +46,7 @@ public class CustomerFacility {
     @Override
     public String toString() {
         return "CustomerFacility{" +
-                "customer=" + customer +
-                ", facility=" + facility +
+                "id=" + id +
                 ", quantity=" + quantity +
                 '}';
     }
@@ -67,12 +57,11 @@ public class CustomerFacility {
         if (o == null || getClass() != o.getClass()) return false;
         CustomerFacility that = (CustomerFacility) o;
         return quantity == that.quantity &&
-                Objects.equals(customer, that.customer) &&
-                Objects.equals(facility, that.facility);
+                Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customer, facility, quantity);
+        return Objects.hash(id, quantity);
     }
 }

@@ -7,30 +7,23 @@ import org.mycode.dto.EmployeeDto;
 import org.mycode.dto.FacilityDto;
 import org.mycode.dto.ServiceDto;
 import org.mycode.model.Employee;
-import org.mycode.repository.FacilityRepository;
-import org.mycode.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeAssemblerImpl implements EmployeeAssembler {
-    private ServiceRepository serviceRepository;
-    private FacilityRepository facilityRepository;
     private ServiceAssembler serviceAssembler;
     private FacilityAssembler facilityAssembler;
 
     @Autowired
-    public EmployeeAssemblerImpl(ServiceRepository serviceRepository, FacilityRepository facilityRepository,
-                                 ServiceAssembler serviceAssembler, FacilityAssembler facilityAssembler) {
-        this.serviceRepository = serviceRepository;
-        this.facilityRepository = facilityRepository;
+    public EmployeeAssemblerImpl(ServiceAssembler serviceAssembler, FacilityAssembler facilityAssembler) {
         this.serviceAssembler = serviceAssembler;
         this.facilityAssembler = facilityAssembler;
     }
 
     @Override
     public Employee assemble(EmployeeDto dto) {
-        return new Employee(dto.getId(), dto.getFirstName(), dto.getLastName(),
+        return new Employee(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.getEin(),
                 serviceAssembler.assemble(dto.getService()), facilityAssembler.assemble(dto.getFacility()));
     }
 
@@ -44,6 +37,7 @@ public class EmployeeAssemblerImpl implements EmployeeAssembler {
         if (model.getService() != null) {
             serviceDto = serviceAssembler.assemble(model.getService());
         }
-        return new EmployeeDto(model.getId(), model.getFirstName(), model.getLastName(), serviceDto, facilityDto);
+        return new EmployeeDto(model.getId(), model.getFirstName(), model.getLastName(), model.getEin(),
+                serviceDto, facilityDto);
     }
 }

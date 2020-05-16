@@ -1,6 +1,6 @@
 package org.mycode.model;
 
-import org.mycode.dto.CustomerDto;
+import org.mycode.dto.enums.CustomerState;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -41,7 +41,7 @@ public class Customer {
     )
     @OrderColumn
     private List<Service> services;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "id.customer")
     @OrderColumn
     private Set<CustomerFacility> facilities;
 
@@ -170,17 +170,17 @@ public class Customer {
         this.facilities = facilities;
     }
 
-    public int verify() {
+    public CustomerState verify() {
         boolean isInfoNull = firstName == null || lastName == null || passport == null || startDate == null ||
                 paymentType == null;
         if (isInfoNull && room != null) {
-            return CustomerDto.ENTERING_INFO;
+            return CustomerState.ENTERING_INFO;
         } else if (!isInfoNull && room == null) {
-            return CustomerDto.ORDERING_ROOM;
+            return CustomerState.ORDERING_ROOM;
         } else if (!isInfoNull) {
-            return CustomerDto.VERIFIED;
+            return CustomerState.VERIFIED;
         } else {
-            return CustomerDto.NOT_VERIFIED;
+            return CustomerState.NOT_VERIFIED;
         }
     }
 

@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Facility review page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function submitting() {
+            $("#submit").css({"display": "table-row"});
+        }
+    </script>
+</head>
+<body>
+<h1>Your facilities</h1>
+<!--/*@thymesVar id="selectedFacility" type="org.mycode.dto.FacilityDto"*/-->
+<!--/*@thymesVar id="facilities" type="java.util.Map<java.lang.String, java.lang.Integer>"*/-->
+<form action="#" method='POST' th:action="@{/order/facility/review}" th:object="${selectedFacility}">
+    <table>
+        <tr th:each="el : ${facilities}">
+            <td>
+                <input th:field="*{name}" th:id="${el.getKey()}" th:onchange="submitting()"
+                       th:value="${el.getKey()}" type="radio">
+            </td>
+            <td>
+                <label th:for="${el.getKey()}"
+                       th:utext="${'Type: '+el.getKey()+'<br>Quantity: '+el.getValue()}"></label>
+            </td>
+        </tr>
+        <tr id="submit" style="display:none;">
+            <td colspan="2"><input name="submit" type="submit" value="Delete"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

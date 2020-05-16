@@ -21,13 +21,13 @@ public class RoomController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<RoomDto> getById(@PathVariable long id) {
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<List<RoomDto>> getAll() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }

@@ -1,5 +1,7 @@
 package org.mycode.dto;
 
+import org.mycode.dto.enums.CustomerState;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -7,11 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CustomerDto {
-    public static final int NOT_VERIFIED = -1;
-    public static final int ORDERING_ROOM = 0;
-    public static final int ENTERING_INFO = 1;
-    public static final int VERIFIED = 2;
-
     private long id;
     private String firstName;
     private String lastName;
@@ -23,9 +20,24 @@ public class CustomerDto {
     private RoomDto room;
     private List<String> services;
     private Map<String, Integer> facilities;
-    private int stateOfCustomer;
+    private CustomerState stateOfCustomer;
 
     public CustomerDto() {
+        verify();
+    }
+
+    public CustomerDto(CustomerDto customerDto) {
+        this.id = customerDto.getId();
+        this.firstName = customerDto.getFirstName();
+        this.lastName = customerDto.getLastName();
+        this.passport = customerDto.getPassport();
+        this.startDate = customerDto.getStartDate();
+        this.endDate = customerDto.getEndDate();
+        this.fees = customerDto.getFees();
+        this.paymentType = customerDto.getPaymentType();
+        this.room = customerDto.getRoom();
+        this.services = customerDto.getServices();
+        this.facilities = customerDto.getFacilities();
         verify();
     }
 
@@ -52,6 +64,7 @@ public class CustomerDto {
         this.paymentType = paymentType;
         this.services = services;
         this.facilities = facilities;
+        verify();
     }
 
     public CustomerDto(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
@@ -71,7 +84,7 @@ public class CustomerDto {
         verify();
     }
 
-    public int getStateOfCustomer() {
+    public CustomerState getStateOfCustomer() {
         return stateOfCustomer;
     }
 
@@ -81,6 +94,7 @@ public class CustomerDto {
 
     public void setId(long id) {
         this.id = id;
+        verify();
     }
 
     public String getFirstName() {
@@ -134,6 +148,7 @@ public class CustomerDto {
 
     public void setFees(BigDecimal fees) {
         this.fees = fees;
+        verify();
     }
 
     public String getPaymentType() {
@@ -160,6 +175,7 @@ public class CustomerDto {
 
     public void setServices(List<String> services) {
         this.services = services;
+        verify();
     }
 
     public Map<String, Integer> getFacilities() {
@@ -168,19 +184,20 @@ public class CustomerDto {
 
     public void setFacilities(Map<String, Integer> facilities) {
         this.facilities = facilities;
+        verify();
     }
 
     private void verify() {
         boolean isInfoNull = firstName == null || lastName == null || passport == null || startDate == null ||
                 paymentType == null;
         if (isInfoNull && room != null) {
-            stateOfCustomer = ENTERING_INFO;
+            stateOfCustomer = CustomerState.ENTERING_INFO;
         } else if (!isInfoNull && room == null) {
-            stateOfCustomer = ORDERING_ROOM;
+            stateOfCustomer = CustomerState.ORDERING_ROOM;
         } else if (!isInfoNull) {
-            stateOfCustomer = VERIFIED;
+            stateOfCustomer = CustomerState.VERIFIED;
         } else {
-            stateOfCustomer = NOT_VERIFIED;
+            stateOfCustomer = CustomerState.NOT_VERIFIED;
         }
     }
 
@@ -212,11 +229,14 @@ public class CustomerDto {
                 Objects.equals(endDate, that.endDate) &&
                 Objects.equals(fees, that.fees) &&
                 Objects.equals(paymentType, that.paymentType) &&
-                Objects.equals(room, that.room);
+                Objects.equals(room, that.room) &&
+                Objects.equals(services, that.services) &&
+                Objects.equals(facilities, that.facilities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, passport, startDate, endDate, fees, paymentType, room);
+        return Objects.hash(id, firstName, lastName, passport, startDate, endDate, fees, paymentType, room, services,
+                facilities);
     }
 }

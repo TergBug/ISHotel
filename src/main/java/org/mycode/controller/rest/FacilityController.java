@@ -21,13 +21,13 @@ public class FacilityController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<FacilityDto> getById(@PathVariable long id) {
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMP') or hasRole('ADMIN')")
     public ResponseEntity<List<FacilityDto>> getAll() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }

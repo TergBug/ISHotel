@@ -20,32 +20,32 @@ public class ExceptionController {
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchEntryException.class)
     public ModelAndView handleNoSuchEntryException() {
-        return new ModelAndView("error404");
+        return new ModelAndView("errors/error404");
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotUniqueEntryException.class)
     public ModelAndView handleNotUniqueEntryException() {
-        return new ModelAndView("error400");
+        return new ModelAndView("errors/error400");
     }
 
     @ExceptionHandler({SQLException.class, JpaSystemException.class, GenericJDBCException.class})
     public ModelAndView handleRepoStorageException(Exception e) {
         if (e.getCause().getCause().getMessage().equals("This room is not free")) {
-            return new ModelAndView("error400", HttpStatus.BAD_REQUEST);
+            return new ModelAndView("errors/error400", HttpStatus.BAD_REQUEST);
         }
-        return new ModelAndView("error500", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ModelAndView("errors/error500", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ResponseStatus(code = HttpStatus.CONFLICT)
     @ExceptionHandler({ConstraintViolationException.class, DataIntegrityViolationException.class})
     public ModelAndView handleConstraintException() {
-        return new ModelAndView("error409");
+        return new ModelAndView("errors/error409");
     }
 
     @ResponseStatus(code = HttpStatus.FORBIDDEN)
     @ExceptionHandler(CannotSignUpException.class)
     public ModelAndView handleSignUpException() {
-        return new ModelAndView("failedsignup");
+        return new ModelAndView("errors/failedsignup");
     }
 }

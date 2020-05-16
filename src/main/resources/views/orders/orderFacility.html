@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order facility page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function setMaxQuantity() {
+            const quantity = parseInt($("#selFacility option:selected").attr("id"));
+            if (quantity > 0) {
+                document.getElementById('quantity').setAttribute("min", "1");
+                document.getElementById('quantity').setAttribute("value", "1");
+                document.getElementById('quantity').setAttribute("max", quantity);
+            }
+        }
+    </script>
+</head>
+<body th:onload="setMaxQuantity()">
+<h1>Order facility</h1>
+<!--/*@thymesVar id="selectedFacility" type="org.mycode.dto.FacilityDto"*/-->
+<!--/*@thymesVar id="facilities" type="java.util.List<org.mycode.dto.FacilityDto>"*/-->
+<form action="#" method='POST' th:action="@{/order/facility}" th:object="${selectedFacility}">
+    <table>
+        <tr>
+            <td>Type:</td>
+            <td>
+                <select id="selFacility" th:field="*{name}" th:onchange="setMaxQuantity()"
+                        th:with="mas = ${facilities}">
+                    <option th:each="el : ${mas}" th:id="${el.quantity}" th:text="${el.name}"
+                            th:value="${el.name}"></option>
+                </select>
+            </td>
+            <td>
+                <input id="quantity" max="0" min="0" th:field="*{quantity}" type="number" value="">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

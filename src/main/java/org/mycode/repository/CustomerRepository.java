@@ -12,4 +12,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     @EntityGraph(value = "Customer.detail", type = EntityGraph.EntityGraphType.LOAD)
     List<Customer> findAll();
+
+    @EntityGraph(value = "Customer.detail", type = EntityGraph.EntityGraphType.LOAD)
+    Customer findCustomerByPassport(String passport);
 }

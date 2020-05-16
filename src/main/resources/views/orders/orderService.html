@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order service page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Order service</h1>
+<!--/*@thymesVar id="selectedService" type="org.mycode.dto.ServiceDto"*/-->
+<!--/*@thymesVar id="services" type="java.util.List<org.mycode.dto.ServiceDto>"*/-->
+<form action="#" method='POST' th:action="@{/order/service}" th:object="${selectedService}">
+    <table>
+        <tr>
+            <td>Type:</td>
+            <td>
+                <select th:field="*{name}" th:with="mas = ${services}">
+                    <option th:each="el : ${mas}" th:text="${el.name}" th:value="${el.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

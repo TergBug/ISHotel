@@ -14,4 +14,6 @@ public interface CustomerService {
     void delete(long deletedEntry);
 
     List<CustomerDto> getAll();
+
+    CustomerDto getByPassport(String passport);
 }

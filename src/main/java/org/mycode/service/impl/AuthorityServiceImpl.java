@@ -67,4 +67,14 @@ public class AuthorityServiceImpl implements AuthorityService {
             throw new NoSuchEntryException();
         }
     }
+
+    @Override
+    public String getIdentityInfoOfUser(String username) {
+        UserSecurity user = userSecurityRepository.findUserSecurityByUsername(username);
+        if (user != null) {
+            return user.getIdentityInfo();
+        } else {
+            throw new NoSuchEntryException();
+        }
+    }
 }

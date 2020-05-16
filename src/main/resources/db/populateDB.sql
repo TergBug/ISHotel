@@ -16,13 +16,13 @@ values ('Bed and chair', 50, 3.00),
 commit;
 
 -- Employees --
-insert into employees (first_name, last_name, service_id, facility_id)
-values ('Albert', 'Ant', 2, 1),
-       ('Carl', 'Din', 2, 2),
-       ('Phoede', 'Rich', 1, null),
-       ('Harry', 'Potter', 3, 4),
-       ('Wold', 'Disney', 4, 3),
-       ('Joey', 'Sting', 5, null);
+insert into employees (first_name, last_name, ein, service_id, facility_id)
+values ('Albert', 'Ant', 'qwer1234', 2, 1),
+       ('Carl', 'Din', 'pord533', 2, 2),
+       ('Phoede', 'Rich', 'asfd921', 1, null),
+       ('Harry', 'Potter', 'pred334', 3, 4),
+       ('Wold', 'Disney', 'prw3234', 4, 3),
+       ('Joey', 'Sting', '199ed34', 5, null);
 commit;
 
 -- Rooms --
@@ -77,12 +77,12 @@ values ('Cash'),
        ('Cryptocurrency');
 commit;
 insert into customers (first_name, last_name, passport, room_id, start_date, end_date, fees, payment_type_id)
-values ('Joey', 'Tribbiani', 'qwerty123', 8, '01.02.2020', '01.03.2020', 200.00, 1),
-       ('Fhoebe', 'Buffay', 'qwerty123', 3, '01.02.2020', '01.03.2020', 800.00, 1),
-       ('Rachel', 'Green', 'qwerty123', 25, '01.02.2020', '01.03.2020', 1000.00, 2),
-       ('Ross', 'Geller', 'qwerty123', 16, '01.02.2020', '01.03.2020', 500.00, 3),
-       ('Monica', 'Geller', 'qwerty123', 17, '01.02.2020', '01.03.2020', 500.00, 3),
-       ('Chandler', 'Bing', 'qwerty123', 29, '01.02.2020', '01.03.2020', 5000.00, 2);
+values ('Joey', 'Tribbiani', 'qwsdgf', 8, '01.02.2020', '01.03.2020', 200.00, 1),
+       ('Fhoebe', 'Buffay', 'qdfghg', 3, '01.02.2020', '01.03.2020', 800.00, 1),
+       ('Rachel', 'Green', '23567sdf', 25, '01.02.2020', '01.03.2020', 1000.00, 2),
+       ('Ross', 'Geller', 'q456sfd', 16, '01.02.2020', '01.03.2020', 500.00, 3),
+       ('Monica', 'Geller', 'q76843g', 17, '01.02.2020', '01.03.2020', 500.00, 3),
+       ('Chandler', 'Bing', '6567jq23', 29, '01.02.2020', '01.03.2020', 5000.00, 2);
 commit;
 insert into customers_services (customer_id, service_id)
 values (1, 3),

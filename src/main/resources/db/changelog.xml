@@ -9,22 +9,25 @@
         <sqlFile splitStatements="false" path="./triggers/addFacilityToCustomer.sql" relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="user" id="12345-3" dbms="mysql">
+        <sqlFile splitStatements="false" path="./triggers/updateFacilityToCustomer.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet author="user" id="12345-4" dbms="mysql">
         <sqlFile splitStatements="false" path="./triggers/deleteFacilityFromCustomer.sql"
                  relativeToChangelogFile="true"/>
     </changeSet>
-    <changeSet author="user" id="12345-4" dbms="mysql">
+    <changeSet author="user" id="12345-5" dbms="mysql">
         <sqlFile splitStatements="false" path="./triggers/orderRoom.sql" relativeToChangelogFile="true"/>
     </changeSet>
-    <changeSet author="user" id="12345-5" dbms="mysql">
+    <changeSet author="user" id="12345-6" dbms="mysql">
         <sqlFile splitStatements="false" path="./triggers/deleteCustomer.sql" relativeToChangelogFile="true"/>
     </changeSet>
-    <changeSet author="user" id="12345-6" dbms="mysql">
+    <changeSet author="user" id="12345-7" dbms="mysql">
         <sqlFile path="./populateDB.sql" relativeToChangelogFile="true"/>
     </changeSet>
-    <changeSet author="user" id="12345-7" dbms="mysql">
+    <changeSet author="user" id="12345-8" dbms="mysql">
         <sqlFile path="./securityInit.sql" relativeToChangelogFile="true"/>
     </changeSet>
-    <changeSet author="user" id="12345-8" dbms="mysql">
+    <changeSet author="user" id="12345-9" dbms="mysql">
         <sqlFile path="./securityPopulate.sql" relativeToChangelogFile="true"/>
     </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order page</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<h1>Choose what you want</h1>
+<form>
+    <table>
+        <tr>
+            <td><a href="./order/service"><input type="button" value="Order service"/></a></td>
+        </tr>
+        <tr>
+            <td><a href="./order/facility"><input type="button" value="Order facility"/></a></td>
+        </tr>
+        <tr>
+            <td><a href="./order/service/review"><input type="button" value="Service review"/></a></td>
+        </tr>
+        <tr>
+            <td><a href="./order/facility/review"><input type="button" value="Facility review"/></a></td>
+        </tr>
+    </table>
+</form>
+<form action="#" method='POST' name='f' th:action="@{/logout_proc}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    <input name="logout" type="submit" value="Logout"/>
+</form>
+</body>
+</html>
