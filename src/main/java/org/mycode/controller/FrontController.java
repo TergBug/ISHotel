@@ -21,7 +21,7 @@ public class FrontController {
         if (grantedAuthority.getAuthority().equals("ROLE_CUSTOMER")) {
             return "redirect:/order";
         }
-        return "index";
+        return "redirect:/menu";
     }
 
     @GetMapping("logout")

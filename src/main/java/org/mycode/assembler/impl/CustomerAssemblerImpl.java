@@ -68,7 +68,8 @@ public class CustomerAssemblerImpl implements CustomerAssembler {
                     model.getServices().stream().map(Service::getName)
                             .collect(Collectors.toList()),
                     model.getFacilities().stream()
-                            .collect(Collectors.toMap(el -> el.getId().getFacility().getName(), CustomerFacility::getQuantity)));
+                            .collect(Collectors.toMap(el -> el.getId().getFacility().getName(), CustomerFacility::getQuantity)),
+                    model.totalPayment());
         } else if (model.verify() == CustomerState.NOT_VERIFIED) {
             return new CustomerDto(model.getId());
         }
@@ -78,6 +79,7 @@ public class CustomerAssemblerImpl implements CustomerAssembler {
                 model.getServices().stream().map(Service::getName)
                         .collect(Collectors.toList()),
                 model.getFacilities().stream()
-                        .collect(Collectors.toMap(el -> el.getId().getFacility().getName(), CustomerFacility::getQuantity)));
+                        .collect(Collectors.toMap(el -> el.getId().getFacility().getName(), CustomerFacility::getQuantity)),
+                model.totalPayment());
     }
 }

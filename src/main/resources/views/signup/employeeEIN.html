@@ -6,7 +6,7 @@
 <body>
 <h1>Enter your EIN</h1>
 <!--/*@thymesVar id="ein" type="java.lang.String"*/-->
-<form action="#" method='POST' th:action="@{/views/signup}">
+<form action="#" method='POST' th:action="@{/signup}">
     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
     <table>
         <tr>

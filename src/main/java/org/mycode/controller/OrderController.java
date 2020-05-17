@@ -3,8 +3,10 @@ package org.mycode.controller;
 import org.mycode.assembler.SimpleCustomerConverter;
 import org.mycode.dto.*;
 import org.mycode.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,13 +34,13 @@ public class OrderController {
     private OrderServiceService orderServiceService;
     private OrderFacilityService orderFacilityService;
     private SimpleCustomerConverter simpleCustomerConverter;
+    private TotalPaymentReportService totalPaymentReportService;
 
-    @Autowired
     public OrderController(CustomerService customerService, RoomService roomService, ServiceService serviceService,
                            FacilityService facilityService, PaymentService paymentService,
                            AuthorityService authorityService, OrderRoomService orderRoomService,
                            OrderServiceService orderServiceService, OrderFacilityService orderFacilityService,
-                           SimpleCustomerConverter simpleCustomerConverter) {
+                           SimpleCustomerConverter simpleCustomerConverter, TotalPaymentReportService totalPaymentReportService) {
         this.customerService = customerService;
         this.roomService = roomService;
         this.serviceService = serviceService;
@@ -47,6 +51,7 @@ public class OrderController {
         this.orderServiceService = orderServiceService;
         this.orderFacilityService = orderFacilityService;
         this.simpleCustomerConverter = simpleCustomerConverter;
+        this.totalPaymentReportService = totalPaymentReportService;
     }
 
     @GetMapping({"room", "room/{roomType}", "room/{roomType}/{persons}"})
@@ -158,5 +163,17 @@ public class OrderController {
         String customerPassport = authorityService.getIdentityInfoOfUser(username);
         orderFacilityService.denyOrder(customerPassport, selectedFacility);
         return "redirect:/";
+    }
+
+    @GetMapping("report")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<byte[]> report() throws IOException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String customerPassport = authorityService.getIdentityInfoOfUser(username);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+        totalPaymentReportService.report(customerPassport).write(baos);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf("application/msword"));
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
     }
 }

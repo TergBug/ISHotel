@@ -20,6 +20,7 @@ public class CustomerDto {
     private RoomDto room;
     private List<String> services;
     private Map<String, Integer> facilities;
+    private BigDecimal totalPayment;
     private CustomerState stateOfCustomer;
 
     public CustomerDto() {
@@ -38,6 +39,7 @@ public class CustomerDto {
         this.room = customerDto.getRoom();
         this.services = customerDto.getServices();
         this.facilities = customerDto.getFacilities();
+        this.totalPayment = customerDto.getTotalPayment();
         verify();
     }
 
@@ -53,7 +55,8 @@ public class CustomerDto {
     }
 
     public CustomerDto(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
-                       BigDecimal fees, String paymentType, List<String> services, Map<String, Integer> facilities) {
+                       BigDecimal fees, String paymentType, List<String> services, Map<String, Integer> facilities,
+                       BigDecimal totalPayment) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,12 +67,13 @@ public class CustomerDto {
         this.paymentType = paymentType;
         this.services = services;
         this.facilities = facilities;
+        this.totalPayment = totalPayment;
         verify();
     }
 
     public CustomerDto(long id, String firstName, String lastName, String passport, Date startDate, Date endDate,
                        BigDecimal fees, String paymentType, RoomDto room, List<String> services,
-                       Map<String, Integer> facilities) {
+                       Map<String, Integer> facilities, BigDecimal totalPayment) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -81,6 +85,7 @@ public class CustomerDto {
         this.room = room;
         this.services = services;
         this.facilities = facilities;
+        this.totalPayment = totalPayment;
         verify();
     }
 
@@ -187,6 +192,14 @@ public class CustomerDto {
         verify();
     }
 
+    public BigDecimal getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(BigDecimal totalPayment) {
+        this.totalPayment = totalPayment;
+    }
+
     private void verify() {
         boolean isInfoNull = firstName == null || lastName == null || passport == null || startDate == null ||
                 paymentType == null;
@@ -213,6 +226,9 @@ public class CustomerDto {
                 ", fees=" + fees +
                 ", paymentType='" + paymentType + '\'' +
                 ", room=" + room +
+                ", services=" + services +
+                ", facilities=" + facilities +
+                ", totalPayment=" + totalPayment +
                 '}';
     }
 
@@ -231,12 +247,12 @@ public class CustomerDto {
                 Objects.equals(paymentType, that.paymentType) &&
                 Objects.equals(room, that.room) &&
                 Objects.equals(services, that.services) &&
-                Objects.equals(facilities, that.facilities);
+                Objects.equals(facilities, that.facilities) &&
+                Objects.equals(totalPayment, that.totalPayment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, passport, startDate, endDate, fees, paymentType, room, services,
-                facilities);
+        return Objects.hash(id, firstName, lastName, passport, startDate, endDate, fees, paymentType, room, services, facilities, totalPayment);
     }
 }

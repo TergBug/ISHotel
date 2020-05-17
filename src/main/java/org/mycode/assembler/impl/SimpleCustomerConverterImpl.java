@@ -13,7 +13,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 @Component
 public class SimpleCustomerConverterImpl implements SimpleCustomerConverter {
     private Gson gson;
@@ -36,7 +35,7 @@ public class SimpleCustomerConverterImpl implements SimpleCustomerConverter {
                 BigDecimal.valueOf(simpleDto.getFees()), simpleDto.getPaymentType(),
                 roomService.getById(simpleDto.getRoomId()),
                 gson.fromJson(simpleDto.getServices(), ArrayList.class),
-                gson.fromJson(simpleDto.getFacilities(), HashMap.class));
+                gson.fromJson(simpleDto.getFacilities(), HashMap.class), BigDecimal.valueOf(0));
     }
 
     @Override

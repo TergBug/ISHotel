@@ -184,6 +184,25 @@ public class Customer {
         }
     }
 
+    public BigDecimal totalPayment() {
+        if (verify() == CustomerState.VERIFIED) {
+            BigDecimal totalPrice = getRoom().getPrice();
+            if (services != null && services.size() > 0) {
+                for (Service service : services) {
+                    totalPrice = totalPrice.add(service.getPrice());
+                }
+            }
+            if (facilities != null && facilities.size() > 0) {
+                for (CustomerFacility cf : facilities) {
+                    totalPrice = totalPrice.add(cf.getId().getFacility().getPrice()
+                            .multiply(BigDecimal.valueOf(cf.getQuantity())));
+                }
+            }
+            return totalPrice;
+        }
+        return BigDecimal.valueOf(0);
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
